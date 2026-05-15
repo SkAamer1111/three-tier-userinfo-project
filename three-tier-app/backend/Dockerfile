@@ -16,4 +16,9 @@ COPY --from=builder /app/target/backend-app-1.0.jar app.jar
 
 EXPOSE 8080
 
-CMD ["sh", "-c", "sleep 30 && java -jar app.jar"]
+# I written CMD in EXEC form, so two execute two command we need to use sh -c <command1> && <command2>
+CMD ["sh", "-c", "sleep 30 && java -jar app.jar"]  
+
+
+# if we write CMD in shell form no need to use sh
+# CMD sleep 30 && java -jar app.jar
