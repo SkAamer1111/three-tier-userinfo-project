@@ -16,4 +16,4 @@ COPY --from=builder /app/target/backend-app-1.0.jar app.jar
 
 EXPOSE 8080
 
-CMD ["java", "-jar", "app.jar"]
+CMD ["sh", "-c", "sleep 30 && java -jar app.jar"]
