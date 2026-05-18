@@ -28,3 +28,9 @@ Command TO run:
         -   docker-compose up -d 
                 "-d is used to run the command in background"
 
+###### Pre-requisits #######
+1. java 17 
+2. mavane 3.9
+3. docker 
+4. docker compose
+

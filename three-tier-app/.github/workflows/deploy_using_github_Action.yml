@@ -1,0 +1,40 @@
+name: Auto_deployment_using_github_action
+
+on:
+  push:
+    branches: 
+      - main
+
+jobs:
+  setup-environment:
+    runs-on: self-hosted
+    steps:
+      - name: install java 
+        uses: actions/setup-java@v4
+        with:
+          distribution: termurin
+          java-version: 17
+      - name: install maven
+        run:  sudo apt update && sudo apt install maven -y 
+      - name: install docker 
+        run:  sudo apt install docker.io -y
+      - name: enable docker service
+        run: sytemctl enable docker 
+      - name: start docker service
+        run: sytemctl start docker 
+      - name: install docker compose
+        run:  sudo apt install docker-compose-plugin -y
+      - name: add ubuntu user to docker group
+        run: sudo usermod -aG docker ubuntu
+      
+  deploy:
+    runs-on: self-hosted
+    needs: setup-environment
+    steps:
+      - name: checkout code
+        run: actions/checkout@v4
+      - name: build docker images from compose
+        run: docker-compose build --no-cache
+      - name: run docker container from compose
+        run:  docker-compose up -d
+
