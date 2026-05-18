@@ -12,18 +12,14 @@ jobs:
       - name: install java 
         uses: actions/setup-java@v4
         with:
-          distribution: termurin
+          distribution: temurin
           java-version: 17
       - name: install maven
-        run:  sudo apt update && sudo apt install maven -y 
-      - name: install docker 
-        run:  sudo apt install docker.io -y
+        run:  sudo apt update && sudo apt install maven -y
       - name: enable docker service
-        run: sytemctl enable docker 
+        run: sudo systemctl enable docker 
       - name: start docker service
-        run: sytemctl start docker 
-      - name: install docker compose
-        run:  sudo apt install docker-compose-plugin -y
+        run: sudo systemctl start docker 
       - name: add ubuntu user to docker group
         run: sudo usermod -aG docker ubuntu
       
@@ -32,7 +28,7 @@ jobs:
     needs: setup-environment
     steps:
       - name: checkout code
-        run: actions/checkout@v4
+        uses: actions/checkout@v4
       - name: build docker images from compose
         run: docker-compose build --no-cache
       - name: run docker container from compose
